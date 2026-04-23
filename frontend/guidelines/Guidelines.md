@@ -1,3 +1,75 @@
+# Project Guidelines
+
+This file contains guidelines and best practices for development on this project.
+
+## General Development Guidelines
+
+* Only use absolute positioning when necessary. Opt for responsive and well-structured layouts that use flexbox and grid by default
+* Refactor code as you go to keep code clean and maintainable
+* Keep file sizes small and extract helper functions and components into their own files
+* Follow DRY (Don't Repeat Yourself) principle to avoid code duplication
+* Write clear, self-documenting code with meaningful variable and function names
+
+## Design System Guidelines
+
+This project uses [shadcn/ui](https://ui.shadcn.com/) based on Radix UI components. Follow these guidelines:
+
+* Use a base font-size of 14px for consistency
+* Date formats should always be in the format "Jun 10"
+* The bottom toolbar should only ever have a maximum of 4 items
+* Never use the floating action button with the bottom toolbar
+* Chips should always come in sets of 3 or more
+* Don't use a dropdown if there are 2 or fewer options
+* Use the design system's pre-built components consistently across the application
+
+## Component Guidelines
+
+### Button
+The Button component is a fundamental interactive element in our design system, designed to trigger actions or navigate users through the application. It provides visual feedback and clear affordances to enhance user experience.
+
+#### Usage
+Buttons should be used for important actions that users need to take, such as form submissions, confirming choices, or initiating processes. They communicate interactivity and should have clear, action-oriented labels.
+
+#### Variants
+* **Primary Button** - Used for the main action in a section or page. Bold, filled with the primary brand color.
+* **Secondary Button** - Used for alternative or supporting actions. Outlined with the primary color and transparent background.
+* **Tertiary Button** - Used for the least important actions. Text-only with no border, using primary color.
+# Project Guidelines
+
+This file contains guidelines and best practices for development on this project.
+
+## General Development Guidelines
+
+* Only use absolute positioning when necessary. Opt for responsive and well-structured layouts that use flexbox and grid by default
+* Refactor code as you go to keep code clean and maintainable
+* Keep file sizes small and extract helper functions and components into their own files
+* Follow DRY (Don't Repeat Yourself) principle to avoid code duplication
+* Write clear, self-documenting code with meaningful variable and function names
+
+## Design System Guidelines
+
+This project uses [shadcn/ui](https://ui.shadcn.com/) based on Radix UI components. Follow these guidelines:
+
+* Use a base font-size of 14px for consistency
+* Date formats should always be in the format "Jun 10"
+* The bottom toolbar should only ever have a maximum of 4 items
+* Never use the floating action button with the bottom toolbar
+* Chips should always come in sets of 3 or more
+* Don't use a dropdown if there are 2 or fewer options
+* Use the design system's pre-built components consistently across the application
+
+## Component Guidelines
+
+### Button
+The Button component is a fundamental interactive element in our design system, designed to trigger actions or navigate users through the application. It provides visual feedback and clear affordances to enhance user experience.
+
+#### Usage
+Buttons should be used for important actions that users need to take, such as form submissions, confirming choices, or initiating processes. They communicate interactivity and should have clear, action-oriented labels.
+
+#### Variants
+* **Primary Button** - Used for the main action in a section or page. Bold, filled with the primary brand color.
+* **Secondary Button** - Used for alternative or supporting actions. Outlined with the primary color and transparent background.
+* **Tertiary Button** - Used for the least important actions. Text-only with no border, using primary color.
 **Add your own guidelines here**
 <!--
 

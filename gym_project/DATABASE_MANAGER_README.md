@@ -5,7 +5,6 @@ All database management scripts have been consolidated into a single `database_m
 - Table creation
 - Column management (ALTER TABLE operations)
 - Data backfill operations
-- QR code generation
 - Complete database initialization
 
 ## Previous Individual Files (Now Merged)
@@ -17,7 +16,6 @@ The following files have been merged into `database_manager.py`:
 - `add_health_cols.py` → `add_health_columns()`
 - `add_reg_no.py` → `add_registration_number_column()`
 - `add_tracking_cols.py` → `add_tracking_columns()`
-- `backfill_qrs.py` → `generate_qr_codes()`
 - `backfill_reg_no.py` → `backfill_registration_numbers()`
 - `create_payments_tables.py` → `create_payment_table()`
 - `setup_fitness_tables.py` → `create_workout_plan_table()`, `create_meal_plan_table()`
@@ -31,7 +29,7 @@ The following files have been merged into `database_manager.py`:
 ```bash
 python database_manager.py setup-all
 ```
-This runs everything: tables, columns, backfill, and QR code generation.
+This runs everything: tables, columns, and backfill operations.
 
 #### Initialize All Tables
 ```bash
@@ -51,12 +49,6 @@ python database_manager.py backfill
 ```
 Assigns registration numbers to users without them.
 
-#### Generate QR Codes
-```bash
-python database_manager.py generate-qr
-```
-Generates QR codes for all users with registration numbers.
-
 #### Individual Table Creation
 ```bash
 python database_manager.py init-attendance
@@ -73,7 +65,6 @@ from database_manager import (
     create_attendance_table,
     add_health_columns,
     backfill_registration_numbers,
-    generate_qr_codes,
     setup_complete_database
 )
 
@@ -134,7 +125,6 @@ All functions include proper error handling:
 ✓ CLI and programmatic interfaces
 ✓ Safe column additions (no duplicates)
 ✓ Comprehensive error handling
-✓ QR code generation for member identification
 ✓ Registration number backfill
 ✓ Clean connection management
 

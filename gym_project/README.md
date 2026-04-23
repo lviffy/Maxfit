@@ -5,7 +5,7 @@ Here are the step-by-step instructions to get your Flask application up and runn
 ## 1. Install Dependencies
 Open your Command Prompt or PowerShell, navigate to the `gym_project` folder, and run:
 ```bash
-pip install flask mysql-connector-python qrcode pillow razorpay
+pip install flask mysql-connector-python razorpay
 ```
 
 ## 2. Setup the Database

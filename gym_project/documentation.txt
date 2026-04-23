@@ -6,7 +6,7 @@ GYM MANAGEMENT SYSTEM - DOCUMENTATION
 ----------------------------------------
 The Gym Management System is a completely centralized, monolithic full-stack web application designed to natively support physical Gym Owners and Administrators scaling robust internal operations. It replaces standalone external spreadsheets natively by connecting Administrators, specialized Trainers, and individual target Members directly via mapped SQL databases and specialized dashboards.
 
-The core architecture natively structures offline constraints and simulated online environments precisely bridging isolated user environments for real-world functionality including automated billing tracking, personalized workout regimes, granular health profiles, and unique scannable access QR codes.
+The core architecture natively structures offline constraints and simulated online environments precisely bridging isolated user environments for real-world functionality including automated billing tracking, personalized workout regimes, and granular health profiles.
 
 
 2. CORE FEATURE MODULES
@@ -29,10 +29,6 @@ D. Secure Payments Gateway (Online & Offline Mock API)
 - Exposes Sandbox interactions seamlessly mapping external Razorpay mocks directly structurally rendering internally natively over `/payment-success` bounds smoothly over member screens!
 - Provides Admin arrays explicitly enabling internal Offline payment logs smoothly cleanly cleanly executing natively!
 
-E. QR Scanner Engine Matrix
-- Inherently relies on explicit Python libraries rendering algorithmic binary mapping arrays dynamically returning User ID targets smoothly.
-- Stores `.png` files securely routing specific scanner targets mapping into public read-only constraints specifically over `/member-details/`.
-
 
 3. TECHNOLOGY STACK
 ----------------------------------------
@@ -40,7 +36,6 @@ E. QR Scanner Engine Matrix
 - Web Gateway Ecosystem: Flask (Jinja2 Templates, Session management cleanly explicitly parsed out inherently natively)
 - Database RDBMS Tracker: MySQL (MySQL-Connector-Python handling cursor explicitly executed queries inherently)
 - Frontend Interface GUI: Semantic HTML5 tightly integrated via Jinja2 bindings (Server-Side Rendering securely).
-- QR Generation Codec: `qrcode` Python Library + Pillow mapping explicitly saving explicit images seamlessly.
 - External Integration Mappings: Razorpay (Mapped over API testing bounds explicitly natively resolving mock inputs properly).
 
 
@@ -52,7 +47,7 @@ A. Boot Sequence
 - Launch explicitly targeting inherently via `python app.py` routing the active endpoints cleanly structurally securely binding `127.0.0.1:5000` port bindings! 
 
 B. Standard Add Member Flow
-- Administrators natively execute `/add-member`. Python intercepts data securely translating metric data mathematically rendering accurate initial Base Metabolic Rate formulas seamlessly implicitly saving natively natively returning unique explicit `'MEMxxxx'` identifiers locally immediately automatically executing QR strings directly automatically natively!
+- Administrators natively execute `/add-member`. Python intercepts data securely translating metric data mathematically rendering accurate initial Base Metabolic Rate formulas seamlessly implicitly saving natively natively returning unique explicit `'MEMxxxx'` identifiers locally immediately automatically!
 
 C. Tracking Integrations Flow
 - Trainers securely isolate targets mapping via `/trainer`. The application queries specifically matching target User integer mappings explicitly isolating records internally routing back `update` parameters cleanly overriding old plans inherently securely avoiding messy data pollution tracking natively securely!

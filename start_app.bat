@@ -10,11 +10,11 @@ cd ..
 
 echo [2/2] Starting React Frontend...
 cd frontend
-start "Gym Frontend Server" cmd /k "npm run dev"
+start "Gym Frontend Server" cmd /k "pnpm run dev"
 cd ..
 
 echo ==========================================
 echo Both servers have been launched!
 echo The backend is running on http://127.0.0.1:5000
-echo The frontend will be available at http://localhost:5173
+echo The frontend will be available at http://localhost:3000
 echo ==========================================

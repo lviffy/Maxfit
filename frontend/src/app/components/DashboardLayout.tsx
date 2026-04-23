@@ -1,10 +1,12 @@
-import { ReactNode, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router';
 import { useAuth } from '../contexts/AuthContext';
 import { useTheme } from '../contexts/ThemeContext';
 import {
   LayoutDashboard,
   Users,
+  UserPlus,
+  BadgeIndianRupee,
   Dumbbell,
   CreditCard,
   Activity,
@@ -16,8 +18,10 @@ import {
   X,
   Sun,
   Moon,
+  Wallet,
+  Megaphone,
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion } from 'motion/react';
 
 interface Props {
   children: ReactNode;
@@ -29,11 +33,14 @@ export default function DashboardLayout({ children, title }: Props) {
   const { theme, toggleTheme } = useTheme();
   const location = useLocation();
   const navigate = useNavigate();
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 1024);
+  const [sidebarOpen, setSidebarOpen] = useState(() => window.innerWidth >= 1024);
 
   const baseMenuItems = [
     { icon: LayoutDashboard, label: 'Dashboard', path: '/dashboard', roles: ['member'] },
     { icon: Users, label: 'Members', path: '/members', roles: ['admin', 'owner'] },
+    { icon: UserPlus, label: 'Add Member', path: '/members/add', roles: ['admin', 'owner'] },
+    { icon: BadgeIndianRupee, label: 'Subscriptions', path: '/subscriptions', roles: ['admin', 'owner'] },
     { icon: Users, label: 'Employees', path: '/employees', roles: ['owner'] },
     { icon: Dumbbell, label: 'Trainer Panel', path: '/trainer', roles: ['trainer'] },
     { icon: CreditCard, label: 'Payments', path: '/payments', roles: ['member'] },
@@ -42,73 +49,105 @@ export default function DashboardLayout({ children, title }: Props) {
     { icon: TrendingUp, label: 'Progress', path: '/progress', roles: ['member'] },
     { icon: Calendar, label: 'Schedule', path: '/schedule', roles: ['member', 'trainer'] },
     { icon: Award, label: 'Badges', path: '/badges', roles: ['member'] },
+    { icon: Wallet, label: 'Budget', path: '/budget', roles: ['admin', 'owner'] },
+    { icon: Megaphone, label: 'Announcements', path: '/announcements', roles: ['member', 'trainer', 'admin', 'owner'] },
   ];
 
   const menuItems = baseMenuItems.filter(item => item.roles.includes(user?.role || ''));
+
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth < 1024;
+      setIsMobile(mobile);
+      if (!mobile) {
+        setSidebarOpen(true);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    if (isMobile) {
+      setSidebarOpen(false);
+    }
+  }, [location.pathname, isMobile]);
 
   const handleLogout = () => {
     logout();
     navigate('/login');
   };
 
+  const sidebarClassName = isMobile
+    ? `fixed inset-y-0 left-0 z-40 w-72 border-r border-sidebar-border bg-sidebar transition-transform duration-300 ease-out ${
+        sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+      }`
+    : `fixed inset-y-0 left-0 z-40 w-72 border-r border-sidebar-border bg-sidebar transition-transform duration-300 ease-out ${
+        sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+      }`;
+  const mainOffsetClassName = isMobile ? 'lg:ml-0' : sidebarOpen ? 'lg:ml-72' : 'lg:ml-0';
+
+  const isPathActive = (path: string) => {
+    if (path === '/members') {
+      return location.pathname === '/members' || /^\/members\/\d+$/.test(location.pathname);
+    }
+    return location.pathname === path;
+  };
+
   return (
-    <div className="min-h-screen bg-background flex">
-      {/* Sidebar */}
-      <AnimatePresence>
-        {sidebarOpen && (
-          <motion.aside
-            initial={{ x: -280 }}
-            animate={{ x: 0 }}
-            exit={{ x: -280 }}
-            transition={{ type: 'spring', damping: 20 }}
-            className="w-64 bg-sidebar border-r border-sidebar-border flex-shrink-0 fixed h-full z-40 lg:relative flex flex-col"
-          >
-            <div className="p-6 border-b border-sidebar-border shrink-0">
-              <Link to="/">
-                <h1 className="text-2xl font-bold text-primary hover:text-primary/80 transition-colors">GymFlow</h1>
-              </Link>
-              <p className="text-sm text-sidebar-foreground/60 mt-1">
+    <div className="min-h-screen bg-background">
+      <aside className={sidebarClassName}>
+        <div className="flex h-full flex-col">
+          <div className="border-b border-sidebar-border p-6">
+            <Link to="/" className="block">
+              <h1 className="text-2xl font-bold text-primary transition-all">
+                GymFlow
+              </h1>
+            </Link>
+            <>
+              <p className="mt-3 text-sm text-sidebar-foreground/70">
                 {user?.firstName} {user?.lastName}
               </p>
-              <p className="text-xs text-sidebar-foreground/40 capitalize">{user?.role}</p>
-            </div>
+              <p className="text-xs capitalize text-sidebar-foreground/45">{user?.role}</p>
+            </>
+          </div>
 
-            <nav className="p-4 space-y-2 flex-1 overflow-y-auto">
-              {menuItems.map((item) => {
-                const isActive = location.pathname === item.path;
-                return (
-                  <Link key={item.path} to={item.path}>
-                    <motion.div
-                      whileHover={{ x: 4 }}
-                      className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${
-                        isActive
-                          ? 'bg-sidebar-primary text-sidebar-primary-foreground shadow-lg'
-                          : 'text-sidebar-foreground hover:bg-sidebar-accent'
-                      }`}
-                    >
-                      <item.icon className="w-5 h-5" />
-                      <span className="font-medium">{item.label}</span>
-                    </motion.div>
-                  </Link>
-                );
-              })}
-            </nav>
+          <nav className="flex-1 space-y-2 overflow-y-auto p-4">
+            {menuItems.map((item) => {
+              const isActive = isPathActive(item.path);
+              return (
+                <Link key={item.path} to={item.path}>
+                  <motion.div
+                    whileHover={{ x: 4 }}
+                    className={`flex items-center gap-3 rounded-xl px-4 py-3 transition-colors ${
+                      isActive
+                        ? 'bg-sidebar-primary text-sidebar-primary-foreground shadow-lg'
+                        : 'text-sidebar-foreground hover:bg-sidebar-accent'
+                    }`}
+                  >
+                    <item.icon className="h-5 w-5 shrink-0" />
+                    <span className="font-medium">{item.label}</span>
+                  </motion.div>
+                </Link>
+              );
+            })}
+          </nav>
 
-            <div className="p-4 border-t border-sidebar-border shrink-0 bg-sidebar">
-              <button
-                onClick={handleLogout}
-                className="flex items-center gap-3 px-4 py-3 rounded-lg text-sidebar-foreground hover:bg-destructive hover:text-destructive-foreground transition-all w-full"
-              >
-                <LogOut className="w-5 h-5" />
-                <span className="font-medium">Logout</span>
-              </button>
-            </div>
-          </motion.aside>
-        )}
-      </AnimatePresence>
+          <div className="mt-auto border-t border-sidebar-border p-4">
+            <button
+              onClick={handleLogout}
+              className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sidebar-foreground transition-colors hover:bg-destructive hover:text-destructive-foreground"
+            >
+              <LogOut className="h-5 w-5 shrink-0" />
+              <span className="font-medium">Logout</span>
+            </button>
+          </div>
+        </div>
+      </aside>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col min-h-screen">
+      <div className={`min-h-screen transition-[margin] duration-300 ease-out ${mainOffsetClassName}`}>
         {/* Top Navbar */}
         <header className="h-16 bg-card border-b border-border flex items-center justify-between px-6 sticky top-0 z-30">
           <div className="flex items-center gap-4">
@@ -138,7 +177,7 @@ export default function DashboardLayout({ children, title }: Props) {
       </div>
 
       {/* Mobile Overlay */}
-      {sidebarOpen && (
+      {isMobile && sidebarOpen && (
         <div
           className="fixed inset-0 bg-black/50 z-30 lg:hidden"
           onClick={() => setSidebarOpen(false)}

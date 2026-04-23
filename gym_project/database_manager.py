@@ -4,7 +4,6 @@ Merges all database setup, table creation, column management, and data operation
 """
 
 import os
-import qrcode
 import mysql.connector
 import argparse
 import sys
@@ -401,45 +400,6 @@ def backfill_registration_numbers():
 
 
 # ============================================================================
-# QR CODE GENERATION
-# ============================================================================
-
-def generate_qr_codes():
-    """Generate QR codes for all users with registration numbers"""
-    try:
-        # Ensure directory exists
-        os.makedirs('static/qrcodes', exist_ok=True)
-        
-        connection = get_connection()
-        if not connection:
-            return
-        cursor = connection.cursor(dictionary=True)
-        
-        # Get all users with registration numbers
-        cursor.execute("SELECT user_id, reg_no FROM Users WHERE reg_no IS NOT NULL")
-        users = cursor.fetchall()
-        
-        generated_count = 0
-        for u in users:
-            if u['reg_no']:
-                try:
-                    # Create QR code pointing to member details
-                    qr_data = f"http://127.0.0.1:5000/member-details/{u['user_id']}"
-                    img = qrcode.make(qr_data)
-                    img.save(f"static/qrcodes/{u['reg_no']}.png")
-                    generated_count += 1
-                except Exception as e:
-                    print(f"  ✗ Error generating QR for {u['reg_no']}: {e}")
-        
-        print(f"✓ Generated {generated_count} QR codes successfully!")
-        
-    except Exception as e:
-        print(f"✗ Error generating QR codes: {e}")
-    finally:
-        close_connection(connection, cursor)
-
-
-# ============================================================================
 # INITIALIZATION FUNCTIONS
 # ============================================================================
 
@@ -493,13 +453,6 @@ def setup_complete_database():
     backfill_registration_numbers()
     print("="*60 + "\n")
     
-    # Step 4: Generate QR codes
-    print("\n" + "="*60)
-    print("GENERATING QR CODES")
-    print("="*60)
-    generate_qr_codes()
-    print("="*60 + "\n")
-    
     print("✓ Database setup completed successfully!")
 
 
@@ -522,11 +475,8 @@ def main():
     # Command: backfill
     subparsers.add_parser('backfill', help='Backfill registration numbers for users')
     
-    # Command: generate-qr
-    subparsers.add_parser('generate-qr', help='Generate QR codes for all users')
-    
     # Command: setup-all
-    subparsers.add_parser('setup-all', help='Complete database setup (tables, columns, backfill, QR codes)')
+    subparsers.add_parser('setup-all', help='Complete database setup (tables, columns, backfill)')
     
     # Command: init-attendance
     subparsers.add_parser('init-attendance', help='Create Attendance table')
@@ -556,8 +506,6 @@ def main():
         initialize_all_columns()
     elif args.command == 'backfill':
         backfill_registration_numbers()
-    elif args.command == 'generate-qr':
-        generate_qr_codes()
     elif args.command == 'setup-all':
         setup_complete_database()
     elif args.command == 'init-attendance':

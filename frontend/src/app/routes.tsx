@@ -6,6 +6,10 @@ import EmployeeRegister from './pages/EmployeeRegister';
 import Login from './pages/Login';
 import MemberDashboard from './pages/MemberDashboard';
 import AdminMembers from './pages/AdminMembers';
+import AdminAddMember from './pages/AdminAddMember';
+import AdminMemberProfile from './pages/AdminMemberProfile';
+import Subscriptions from './pages/Subscriptions';
+import SubscriptionMemberProfile from './pages/SubscriptionMemberProfile';
 import AdminEmployees from './pages/AdminEmployees';
 import TrainerPanel from './pages/TrainerPanel';
 import Payments from './pages/Payments';
@@ -15,6 +19,8 @@ import Progress from './pages/Progress';
 import Schedule from './pages/Schedule';
 import Badges from './pages/Badges';
 import Owner from './pages/Owner';
+import Budget from './pages/Budget';
+import Announcements from './pages/Announcements';
 import NotFound from './pages/NotFound';
 import ProtectedRoute from './components/ProtectedRoute';
 
@@ -48,6 +54,22 @@ export const router = createBrowserRouter([
     element: <ProtectedRoute allowedRoles={['admin', 'owner']}><AdminMembers /></ProtectedRoute>,
   },
   {
+    path: '/members/add',
+    element: <ProtectedRoute allowedRoles={['admin', 'owner']}><AdminAddMember /></ProtectedRoute>,
+  },
+  {
+    path: '/members/:memberId',
+    element: <ProtectedRoute allowedRoles={['admin', 'owner']}><AdminMemberProfile /></ProtectedRoute>,
+  },
+  {
+    path: '/subscriptions',
+    element: <ProtectedRoute allowedRoles={['admin', 'owner']}><Subscriptions /></ProtectedRoute>,
+  },
+  {
+    path: '/subscriptions/:memberId',
+    element: <ProtectedRoute allowedRoles={['admin', 'owner']}><SubscriptionMemberProfile /></ProtectedRoute>,
+  },
+  {
     path: '/employees',
     element: <ProtectedRoute allowedRoles={['owner']}><AdminEmployees /></ProtectedRoute>,
   },
@@ -78,6 +100,14 @@ export const router = createBrowserRouter([
   {
     path: '/badges',
     element: <ProtectedRoute allowedRoles={['member']}><Badges /></ProtectedRoute>,
+  },
+  {
+    path: '/budget',
+    element: <ProtectedRoute allowedRoles={['admin', 'owner']}><Budget /></ProtectedRoute>,
+  },
+  {
+    path: '/announcements',
+    element: <ProtectedRoute allowedRoles={['member', 'trainer', 'admin', 'owner']}><Announcements /></ProtectedRoute>,
   },
   {
     path: '/owner',
