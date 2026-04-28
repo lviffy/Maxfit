@@ -96,10 +96,10 @@ export default function Login() {
 
         <div className="mt-6 p-4 bg-muted/30 rounded-lg border border-border">
           <p className="text-xs text-muted-foreground mb-2">Demo credentials:</p>
-          <p className="text-xs">Admin: admin@gym.com</p>
-          <p className="text-xs">Trainer: trainer@gym.com</p>
-          <p className="text-xs">Member: member@gym.com</p>
-          <p className="text-xs">Owner: owner@gym.com</p>
+          <p className="text-xs">Admin: admin@maxfit.com</p>
+          <p className="text-xs">Trainer: trainer@maxfit.com</p>
+          <p className="text-xs">Member: member@maxfit.com</p>
+          <p className="text-xs">Owner: owner@maxfit.com</p>
         </div>
       </motion.div>
     </div>
