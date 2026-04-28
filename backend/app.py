@@ -6,6 +6,9 @@ from mysql.connector import Error
 import os
 import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
+from dotenv import load_dotenv
+
+load_dotenv()
 
 class CustomJSONProvider(DefaultJSONProvider):
     def default(self, obj):
@@ -22,10 +25,10 @@ app.secret_key = 'super_secret_gym_key' # Needed for session tracking
 def get_db_connection():
     try:
         connection = mysql.connector.connect(
-            host='localhost',
-            user='root',
-            password='Mayadinkp2806@', # User's actual password
-            database='gym_db'
+            host=os.getenv('DB_HOST', 'localhost'),
+            user=os.getenv('DB_USER', 'your_username'),
+            password=os.getenv('DB_PASSWORD', 'your_password'),
+            database=os.getenv('DB_NAME', 'gym_db')
         )
         return connection
     except Error as e:

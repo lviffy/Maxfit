@@ -8,6 +8,9 @@ import mysql.connector
 import argparse
 import sys
 from datetime import datetime
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 # ============================================================================
@@ -15,10 +18,10 @@ from datetime import datetime
 # ============================================================================
 
 DB_CONFIG = {
-    'host': 'localhost',
-    'user': 'root',
-    'password': 'Mayadinkp2806@',
-    'database': 'gym_db'
+    'host': os.getenv('DB_HOST', 'localhost'),
+    'user': os.getenv('DB_USER', 'your_username'),
+    'password': os.getenv('DB_PASSWORD', 'your_password'),
+    'database': os.getenv('DB_NAME', 'gym_db')
 }
 
 
