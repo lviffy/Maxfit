@@ -27,9 +27,9 @@ export default function Owner() {
 
   const stats = [
     { label: 'Total Members', value: String(budget?.total_members ?? 0), note: `${budget?.active_members ?? 0} active`, icon: Users, color: 'text-blue-500' },
-    { label: 'Total Revenue', value: `$${Number(budget?.total_revenue ?? 0).toLocaleString()}`, note: 'Active subscriptions', icon: DollarSign, color: 'text-green-500' },
-    { label: 'Trainer Add-on Revenue', value: `$${Number(budget?.addon_revenue ?? 0).toLocaleString()}`, note: 'Add-on contribution', icon: Activity, color: 'text-purple-500' },
-    { label: 'Plan Revenue', value: `$${Number(budget?.plan_revenue ?? 0).toLocaleString()}`, note: 'Base plan collection', icon: TrendingUp, color: 'text-orange-500' },
+    { label: 'Total Revenue', value: `₹${Number(budget?.total_revenue ?? 0).toLocaleString()}`, note: 'Active subscriptions', icon: DollarSign, color: 'text-green-500' },
+    { label: 'Trainer Add-on Revenue', value: `₹${Number(budget?.addon_revenue ?? 0).toLocaleString()}`, note: 'Add-on contribution', icon: Activity, color: 'text-purple-500' },
+    { label: 'Plan Revenue', value: `₹${Number(budget?.plan_revenue ?? 0).toLocaleString()}`, note: 'Base plan collection', icon: TrendingUp, color: 'text-orange-500' },
   ];
 
   return (

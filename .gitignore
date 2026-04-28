@@ -15,3 +15,6 @@ venv.bak/
 .DS_Store
 # Local run logs
 .run-logs/
+
+# Frontend build output
+frontend/dist/

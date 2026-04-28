@@ -39,21 +39,21 @@ export default function Payments() {
               <DollarSign className="w-5 h-5 text-primary" />
               <p className="text-sm text-muted-foreground">Total Revenue</p>
             </div>
-            <p className="text-3xl font-bold">${Number(budget?.total_revenue || 0).toLocaleString()}</p>
+            <p className="text-3xl font-bold">₹{Number(budget?.total_revenue || 0).toLocaleString()}</p>
           </div>
           <div className="p-6 rounded-xl bg-card border border-border">
             <div className="flex items-center gap-3 mb-2">
               <TrendingUp className="w-5 h-5 text-green-500" />
               <p className="text-sm text-muted-foreground">This Month</p>
             </div>
-            <p className="text-3xl font-bold">${thisMonthRevenue.toLocaleString()}</p>
+            <p className="text-3xl font-bold">₹{thisMonthRevenue.toLocaleString()}</p>
           </div>
           <div className="p-6 rounded-xl bg-card border border-border">
             <div className="flex items-center gap-3 mb-2">
               <DollarSign className="w-5 h-5 text-yellow-500" />
               <p className="text-sm text-muted-foreground">Pending</p>
             </div>
-            <p className="text-3xl font-bold">${pendingRevenue.toLocaleString()}</p>
+            <p className="text-3xl font-bold">₹{pendingRevenue.toLocaleString()}</p>
           </div>
         </div>
 

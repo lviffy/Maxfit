@@ -254,7 +254,7 @@ export default function MemberDashboard() {
                     <p className="font-medium capitalize">{payment.payment_mode} payment</p>
                     <p className="text-xs text-muted-foreground">{payment.payment_date}</p>
                   </div>
-                  <p className="font-bold text-green-500">${payment.amount}</p>
+                  <p className="font-bold text-green-500">₹{Number(payment.amount || 0).toLocaleString()}</p>
                 </div>
               )) : <p className="text-sm text-muted-foreground">No payments recorded yet.</p>}
             </div>

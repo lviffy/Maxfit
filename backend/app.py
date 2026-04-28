@@ -2472,12 +2472,12 @@ def budget_stats():
 
         # Monthly revenue trend (last 6 months based on start_date)
         cursor.execute("""
-            SELECT DATE_FORMAT(start_date, '%%Y-%%m') as month,
+            SELECT DATE_FORMAT(start_date, '%Y-%m') as month,
                    COALESCE(SUM(total_price), 0) as revenue,
                    COUNT(*) as subscriptions
             FROM MemberSubscriptions
             WHERE start_date >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
-            GROUP BY DATE_FORMAT(start_date, '%%Y-%%m')
+            GROUP BY DATE_FORMAT(start_date, '%Y-%m')
             ORDER BY month ASC
         """)
         monthly_trend = cursor.fetchall()
