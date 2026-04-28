@@ -1,8 +1,8 @@
 """Seed one owner or admin user into Users table.
 
 Usage:
-  python seed_user.py --role owner --email owner@example.com --password Pass123! --first-name Gym --last-name Owner
-  python seed_user.py --role admin --email admin@example.com --password Pass123!
+  python seed_user.py --role owner --password Pass123! --first-name Gym --last-name Owner
+  python seed_user.py --role admin --password Pass123!
 """
 
 import argparse
@@ -40,7 +40,7 @@ def generate_reg_no(cursor, role: str) -> str:
 def main():
     parser = argparse.ArgumentParser(description="Seed an owner/admin user")
     parser.add_argument("--role", choices=["owner", "admin"], required=True)
-    parser.add_argument("--email", required=True)
+    parser.add_argument("--email")
     parser.add_argument("--password", required=True)
     parser.add_argument("--first-name", default="Gym")
     parser.add_argument("--last-name", default="User")
@@ -52,10 +52,12 @@ def main():
         conn = get_db_connection()
         cursor = conn.cursor()
 
-        cursor.execute("SELECT user_id FROM Users WHERE email = %s LIMIT 1", (args.email,))
+        email = args.email or f"{args.role}@maxfit.com"
+
+        cursor.execute("SELECT user_id FROM Users WHERE email = %s LIMIT 1", (email,))
         existing = cursor.fetchone()
         if existing:
-            print(f"User already exists with email {args.email} (user_id={existing[0]}).")
+            print(f"User already exists with email {email} (user_id={existing[0]}).")
             return
 
         reg_no = generate_reg_no(cursor, args.role)
@@ -68,10 +70,10 @@ def main():
         """
         cursor.execute(
             query,
-            (reg_no, args.first_name, args.last_name, args.email, hashed_password, args.role, "active"),
+            (reg_no, args.first_name, args.last_name, email, hashed_password, args.role, "active"),
         )
         conn.commit()
-        print(f"Created {args.role} user: {args.email} (reg_no={reg_no})")
+        print(f"Created {args.role} user: {email} (reg_no={reg_no})")
 
     except Error as e:
         print(f"Database error: {e}")
