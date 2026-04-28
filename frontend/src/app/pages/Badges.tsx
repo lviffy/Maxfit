@@ -24,23 +24,6 @@ export default function Badges() {
     }
   };
 
-  const defaultBadges = [
-    { name: '7 Day Streak', icon: '🔥', desc: 'Attend gym for 7 consecutive days' },
-    { name: 'Consistency King', icon: '👑', desc: 'Attend gym 5 days a week for a month' },
-    { name: 'Weight Loss Champion', icon: '🏆', desc: 'Lose 5kg' },
-    { name: 'Strength Master', icon: '🏋️', desc: 'Lift 2x your body weight' },
-  ];
-
-  const badges = defaultBadges.map(badge => {
-    const earned = earnedBadges.find(eb => eb.badge_name === badge.name);
-    return {
-      ...badge,
-      earned: !!earned,
-      date_awarded: earned?.date_awarded
-    };
-  });
-
-
   return (
     <DashboardLayout title="Badges">
       <div className="space-y-6">
@@ -50,36 +33,35 @@ export default function Badges() {
             <h3 className="text-lg font-semibold">Your Achievement Progress</h3>
           </div>
           <p className="text-sm text-muted-foreground">
-            You've earned {badges.filter(b => b.earned).length} out of {badges.length} badges
+            You've earned {earnedBadges.length} badge{earnedBadges.length === 1 ? '' : 's'}
           </p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-6">
-          {badges.map((badge, index) => (
+          {earnedBadges.map((badge, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: index * 0.1 }}
               whileHover={{ y: -4, scale: 1.02 }}
-              className={`p-6 rounded-xl border transition-all ${
-                badge.earned
-                  ? 'bg-primary/10 border-primary/30 shadow-lg'
-                  : 'bg-card border-border opacity-60'
-              }`}
+              className="p-6 rounded-xl border transition-all bg-primary/10 border-primary/30"
             >
               <div className="text-center">
-                <div className="text-5xl mb-3">{badge.icon}</div>
-                <h3 className="font-semibold mb-2">{badge.name}</h3>
-                <p className="text-sm text-muted-foreground">{badge.desc}</p>
-                {badge.earned && (
-                  <div className="mt-4 px-3 py-1 bg-primary text-white rounded-full text-xs font-medium inline-block">
-                    Earned
-                  </div>
-                )}
+                <div className="text-5xl mb-3">🏅</div>
+                <h3 className="font-semibold mb-2">{badge.badge_name}</h3>
+                <p className="text-sm text-muted-foreground">Awarded on {badge.date_awarded}</p>
+                <div className="mt-4 px-3 py-1 bg-primary text-white rounded-full text-xs font-medium inline-block">
+                  Earned
+                </div>
               </div>
             </motion.div>
           ))}
+          {earnedBadges.length === 0 && (
+            <div className="col-span-full p-6 rounded-xl bg-card border border-border text-center text-muted-foreground">
+              No badges earned yet.
+            </div>
+          )}
         </div>
       </div>
     </DashboardLayout>

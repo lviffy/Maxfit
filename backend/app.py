@@ -2367,6 +2367,39 @@ def get_badges(user_id):
             conn.close()
     return jsonify({"error": "Database error"}), 500
 
+@app.route('/api/member/payments/<int:user_id>', methods=['GET'])
+def member_payments(user_id):
+    if 'role' not in session:
+        return jsonify({"error": "Unauthorized"}), 401
+
+    if session.get('role') == 'member' and str(session.get('user_id')) != str(user_id):
+        return jsonify({"error": "Access Denied"}), 403
+
+    conn = get_db_connection()
+    if conn:
+        try:
+            cursor = conn.cursor(dictionary=True)
+            cursor.execute("""
+                SELECT payment_id, amount, payment_mode, payment_status, payment_date
+                FROM Payment
+                WHERE user_id = %s
+                ORDER BY payment_date DESC
+                LIMIT 20
+            """, (user_id,))
+            rows = cursor.fetchall()
+            for row in rows:
+                if row.get('payment_date'):
+                    row['payment_date'] = row['payment_date'].strftime('%Y-%m-%d')
+                if row.get('amount') is not None:
+                    row['amount'] = float(row['amount'])
+            return jsonify({"user_id": user_id, "payments": rows}), 200
+        except Error as e:
+            return jsonify({"error": str(e)}), 500
+        finally:
+            cursor.close()
+            conn.close()
+    return jsonify({"error": "Database error"}), 500
+
 # --- DIET RECOMMENDATION API ---
 
 @app.route('/diet/<int:user_id>', methods=['GET'])

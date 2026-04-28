@@ -1,20 +1,35 @@
+import { useEffect, useMemo, useState } from 'react';
 import DashboardLayout from '../components/DashboardLayout';
 import { Users, DollarSign, TrendingUp, Activity } from 'lucide-react';
 import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { api } from '../services/api';
 
 export default function Owner() {
-  const stats = [
-    { label: 'Total Members', value: '248', change: '+12%', icon: Users, color: 'text-blue-500' },
-    { label: 'Monthly Revenue', value: '$19,000', change: '+8%', icon: DollarSign, color: 'text-green-500' },
-    { label: 'Active Trainers', value: '12', change: '+2', icon: Activity, color: 'text-purple-500' },
-    { label: 'Growth Rate', value: '15%', change: '+3%', icon: TrendingUp, color: 'text-orange-500' },
-  ];
+  const [budget, setBudget] = useState<any>(null);
 
-  const monthlyData = [
-    { month: 'Jan', members: 220, revenue: 15000 },
-    { month: 'Feb', members: 230, revenue: 18000 },
-    { month: 'Mar', members: 240, revenue: 22000 },
-    { month: 'Apr', members: 248, revenue: 19000 },
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await api.get('/api/budget');
+        setBudget(res.data || null);
+      } catch (e) {
+        console.error('Failed to load owner metrics', e);
+      }
+    };
+    load();
+  }, []);
+
+  const monthlyData = useMemo(() => (budget?.monthly_trend || []).map((item: any) => ({
+    month: item.month,
+    members: item.subscriptions || 0,
+    revenue: item.revenue || 0,
+  })), [budget]);
+
+  const stats = [
+    { label: 'Total Members', value: String(budget?.total_members ?? 0), note: `${budget?.active_members ?? 0} active`, icon: Users, color: 'text-blue-500' },
+    { label: 'Total Revenue', value: `$${Number(budget?.total_revenue ?? 0).toLocaleString()}`, note: 'Active subscriptions', icon: DollarSign, color: 'text-green-500' },
+    { label: 'Trainer Add-on Revenue', value: `$${Number(budget?.addon_revenue ?? 0).toLocaleString()}`, note: 'Add-on contribution', icon: Activity, color: 'text-purple-500' },
+    { label: 'Plan Revenue', value: `$${Number(budget?.plan_revenue ?? 0).toLocaleString()}`, note: 'Base plan collection', icon: TrendingUp, color: 'text-orange-500' },
   ];
 
   return (
@@ -28,7 +43,7 @@ export default function Owner() {
                 <p className="text-sm text-muted-foreground">{stat.label}</p>
               </div>
               <p className="text-3xl font-bold">{stat.value}</p>
-              <p className="text-sm text-green-500 mt-1">{stat.change}</p>
+              <p className="text-sm text-muted-foreground mt-1">{stat.note}</p>
             </div>
           ))}
         </div>

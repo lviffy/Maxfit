@@ -1,14 +1,34 @@
+import { useEffect, useMemo, useState } from 'react';
 import DashboardLayout from '../components/DashboardLayout';
 import { DollarSign, TrendingUp } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { api } from '../services/api';
 
 export default function Payments() {
-  const revenueData = [
-    { month: 'Jan', revenue: 15000 },
-    { month: 'Feb', revenue: 18000 },
-    { month: 'Mar', revenue: 22000 },
-    { month: 'Apr', revenue: 19000 },
-  ];
+  const [budget, setBudget] = useState<any>(null);
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await api.get('/api/budget');
+        setBudget(res.data || null);
+      } catch (e) {
+        console.error('Failed to load payment metrics', e);
+      }
+    };
+    load();
+  }, []);
+
+  const revenueData = useMemo(
+    () => (budget?.monthly_trend || []).map((item: any) => ({ month: item.month, revenue: item.revenue || 0 })),
+    [budget]
+  );
+
+  const thisMonthRevenue = revenueData.length ? Number(revenueData[revenueData.length - 1].revenue || 0) : 0;
+  const pendingRevenue = (budget?.recent_subscriptions || []).reduce(
+    (sum: number, item: any) => sum + ((item.status || '').toLowerCase() !== 'active' ? Number(item.total_price || 0) : 0),
+    0
+  );
 
   return (
     <DashboardLayout title="Payments">
@@ -19,21 +39,21 @@ export default function Payments() {
               <DollarSign className="w-5 h-5 text-primary" />
               <p className="text-sm text-muted-foreground">Total Revenue</p>
             </div>
-            <p className="text-3xl font-bold">$74,000</p>
+            <p className="text-3xl font-bold">${Number(budget?.total_revenue || 0).toLocaleString()}</p>
           </div>
           <div className="p-6 rounded-xl bg-card border border-border">
             <div className="flex items-center gap-3 mb-2">
               <TrendingUp className="w-5 h-5 text-green-500" />
               <p className="text-sm text-muted-foreground">This Month</p>
             </div>
-            <p className="text-3xl font-bold">$19,000</p>
+            <p className="text-3xl font-bold">${thisMonthRevenue.toLocaleString()}</p>
           </div>
           <div className="p-6 rounded-xl bg-card border border-border">
             <div className="flex items-center gap-3 mb-2">
               <DollarSign className="w-5 h-5 text-yellow-500" />
               <p className="text-sm text-muted-foreground">Pending</p>
             </div>
-            <p className="text-3xl font-bold">$2,400</p>
+            <p className="text-3xl font-bold">${pendingRevenue.toLocaleString()}</p>
           </div>
         </div>
 
