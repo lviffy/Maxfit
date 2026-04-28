@@ -48,8 +48,18 @@ backend_cmd() {
 
 frontend_cmd() {
   cd "$FRONTEND_DIR"
+  if command -v bun >/dev/null 2>&1; then
+    info "Using Bun for frontend startup."
+    if [[ ! -d "node_modules" ]]; then
+      info "Installing frontend dependencies with bun..."
+      bun install
+    fi
+    exec bun run dev
+  fi
+
+  warn "Bun not found. Falling back to npm."
   if [[ ! -d "node_modules" ]]; then
-    info "Installing frontend dependencies..."
+    info "Installing frontend dependencies with npm..."
     npm install
   fi
   exec npm run dev
