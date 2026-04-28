@@ -29,6 +29,6 @@ start "Gym Frontend Server" cmd /k "if not exist node_modules npm install && npm
 cd /d ..
 echo ==========================================
 echo Both servers have been launched!
-echo The backend is running on http://127.0.0.1:5000
+echo The backend is running on http://localhost:5000
 echo The frontend will be available at http://localhost:3000
 echo ==========================================

@@ -15,37 +15,37 @@ export default function RoleSelection() {
           <p className="text-muted-foreground">Select your role to get started</p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-6">
-          <Link to="/register/member">
+        <div className="grid md:grid-cols-2 gap-6 items-stretch">
+          <Link to="/register/member" className="h-full">
             <motion.div
               whileHover={{ y: -8, scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="p-12 rounded-2xl bg-card border-2 border-border hover:border-primary transition-all cursor-pointer group"
+              className="h-full min-h-[320px] p-12 rounded-2xl bg-card border-2 border-border hover:border-primary transition-all cursor-pointer group flex items-center justify-center"
             >
-              <div className="text-center">
+              <div className="text-center max-w-sm">
                 <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary group-hover:scale-110 transition-all">
                   <User className="w-10 h-10 text-primary group-hover:text-white transition-colors" />
                 </div>
                 <h2 className="text-2xl font-bold mb-3">Member</h2>
-                <p className="text-muted-foreground">
+                <p className="text-muted-foreground leading-relaxed min-h-[56px]">
                   Access workouts, track progress, and connect with trainers
                 </p>
               </div>
             </motion.div>
           </Link>
 
-          <Link to="/register/employee">
+          <Link to="/register/employee" className="h-full">
             <motion.div
               whileHover={{ y: -8, scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="p-12 rounded-2xl bg-card border-2 border-border hover:border-primary transition-all cursor-pointer group"
+              className="h-full min-h-[320px] p-12 rounded-2xl bg-card border-2 border-border hover:border-primary transition-all cursor-pointer group flex items-center justify-center"
             >
-              <div className="text-center">
+              <div className="text-center max-w-sm">
                 <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary group-hover:scale-110 transition-all">
                   <Briefcase className="w-10 h-10 text-primary group-hover:text-white transition-colors" />
                 </div>
                 <h2 className="text-2xl font-bold mb-3">Employee</h2>
-                <p className="text-muted-foreground">
+                <p className="text-muted-foreground leading-relaxed min-h-[56px]">
                   Join our team as a trainer or admin
                 </p>
               </div>

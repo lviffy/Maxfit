@@ -128,6 +128,8 @@
     transition-property: background-color, border-color, color, fill, stroke;
     transition-duration: 200ms;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: none !important;
+    filter: none !important;
   }
 
   body {
@@ -157,16 +159,6 @@
   * {
     scrollbar-width: thin;
     scrollbar-color: var(--muted-foreground) var(--background);
-  }
-
-  /* Dark mode glow effects */
-  .dark button:hover,
-  .dark .hover\:shadow-primary\/50:hover {
-    box-shadow: 0 10px 40px -10px rgba(249, 115, 22, 0.5);
-  }
-
-  .dark [class*="bg-primary"] {
-    box-shadow: 0 0 20px -5px rgba(249, 115, 22, 0.3);
   }
 
   /**
