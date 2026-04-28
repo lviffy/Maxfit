@@ -102,7 +102,7 @@ export default function DashboardLayout({ children, title }: Props) {
           <div className="border-b border-sidebar-border p-6">
             <Link to="/" className="block">
               <h1 className="text-2xl font-bold text-primary transition-all">
-                GymFlow
+                Max Fit
               </h1>
             </Link>
             <>

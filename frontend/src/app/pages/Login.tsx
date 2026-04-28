@@ -42,7 +42,7 @@ export default function Login() {
             <LogIn className="w-8 h-8 text-primary" />
           </div>
           <h1 className="text-3xl font-bold mb-2">Welcome Back</h1>
-          <p className="text-muted-foreground">Login to your GymFlow account</p>
+          <p className="text-muted-foreground">Login to your Max Fit account</p>
         </div>
 
         {error && (

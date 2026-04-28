@@ -11,7 +11,7 @@ export default function RoleSelection() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-12"
         >
-          <h1 className="text-4xl font-bold mb-3">Join GymFlow</h1>
+          <h1 className="text-4xl font-bold mb-3">Join Max Fit</h1>
           <p className="text-muted-foreground">Select your role to get started</p>
         </motion.div>
 
