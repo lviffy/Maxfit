@@ -13,3 +13,5 @@ venv.bak/
 .vscode/settings.json
 *.log
 .DS_Store
+# Local run logs
+.run-logs/
